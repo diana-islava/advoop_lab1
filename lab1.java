@@ -1,6 +1,12 @@
+// Group 5 - Lab 1: Programming Skills Assessment
+// Group Members: Andres Iglesias, Diana Islava Rauda, Pamela Herrera
+// Lab Description: 
+// Change Log History:
+
 // Imports as needed
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 // Chesspiece Class: Represents a chess piece with its attributes
 class Chesspiece{
@@ -11,36 +17,47 @@ class Chesspiece{
 
 }
 
-// Main Class
+// Main Method: Reads files, takes user input, verifies chess piece moves, and prints results
 public class lab1 {
-    public static void main(String[] args) throws Exception{
-        // Scanner to read the file with the chesspieces to test
-        Scanner reader = new Scanner(new File("chesspieces.txt"));
-
+    public static void main(String[] args){
         // Declare the array to hold the chesspieces and a counter to keep track of how many pieces are read and stored from the file
         Chesspiece[] pieces = new Chesspiece[6];
         int counter = 0;
+        
+        // Try and Cactch block to handle exceptions
+        try{
+                // Scanner to read the file with the chesspieces to test
+            Scanner reader = new Scanner(new File("chesspieces.txt"));
 
-        // 1. Read values from the file
-        while(reader.hasNextLine()){
-            String line = reader.nextLine();
-            // Separate by the commas and get the name, color, position X and Position Y
-            // Use the split() to separate the string by commas
-            String[] parts = line.split(",");
+            // 1. Read values from the file
+            while(reader.hasNextLine()){
+                String line = reader.nextLine();
+                // Separate by the commas and get the name, color, position X and Position Y
+                // Use the split() to separate the string by commas
+                String[] parts = line.split(",");
 
-            // Create an object / structure for each piece to hold all the attributes of the chesspiece
-            // Use the trim() to remove any whitespace from the string
-            Chesspiece piece = new Chesspiece();
-            piece.pieceName = parts[0];
-            piece.color = parts[1].trim();
-            piece.posX = parts[2].trim().toUpperCase().charAt(0);
-            piece.posY = Integer.parseInt(parts[3].trim());
+                // Create an object / structure for each piece to hold all the attributes of the chesspiece
+                // Use the trim() to remove any whitespace from the string
+                Chesspiece piece = new Chesspiece();
+                piece.pieceName = parts[0];
+                piece.color = parts[1].trim();
+                piece.posX = parts[2].trim().toUpperCase().charAt(0);
+                piece.posY = Integer.parseInt(parts[3].trim());
 
-            // 3. Allocate all the object / structure holding chess pieces in an array
-            pieces[counter] = piece;
-            counter++;
+                // 3. Allocate all the object / structure holding chess pieces in an array
+                pieces[counter] = piece;
+                counter++;
+            }
+            reader.close();
         }
-        reader.close();
+        catch(FileNotFoundException e){
+            System.out.println("File not found!");
+            return;
+        } catch(Exception e){
+            System.out.println("Error reading file: " + e.getMessage());
+            return;
+        }
+        
 
         // 4. Prompt the user only once to enter a new position (X, Y)
         // Scanner to read user input to get the target position
@@ -104,7 +121,7 @@ public class lab1 {
                             validMove = true;
                         }
                     } else if(pieceName.equals("PAWN")){
-                        if(differenceX == 0 && differenceY == 1){
+                        if(differenceX == 0 && (targetPosY - piece.posY == 1)){
                             validMove = true;
                         }
                     }
