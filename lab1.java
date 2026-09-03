@@ -1,6 +1,8 @@
 // Group 5 - Lab 1: Programming Skills Assessment
 // Group Members: Andres Iglesias, Diana Islava Rauda, Pamela Herrera
-// Lab Description: 
+// Lab Description: Simple Java program to verify if a user given coordinate is a valid move
+// for a list of chesspieces taken from a .txt file. The pieces are instances of the Chesspiece class, containing piecename, color,
+// posX and posY. 
 // Change Log History:
 
 // Imports as needed
